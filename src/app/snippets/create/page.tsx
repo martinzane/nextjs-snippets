@@ -1,7 +1,25 @@
-export default function NewSnippetPage() {
+import db from "@/db";
+import { redirect } from "next/navigation";
+
+export default function CreateSnippetPage() {
+  async function create(formData: FormData) {
+    "use server";
+
+    const title = formData.get("title") as string;
+    const code = formData.get("code") as string;
+
+    const snippet = await db.snippet.create({
+      data: { title, code },
+    });
+
+    console.log(snippet);
+
+    redirect("/");
+  }
+
   return (
-    <form>
-      <h3 className="font-bold m-3">Add a new snippet</h3>
+    <form action={create}>
+      <h3 className="font-bold m-3">Create a new snippet</h3>
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
           <label className="w-12" htmlFor="title">
@@ -27,7 +45,7 @@ export default function NewSnippetPage() {
         </div>
 
         <button type="submit" className="rounded p-2 bg-blue-200">
-          Add snippet
+          Create
         </button>
       </div>
     </form>
