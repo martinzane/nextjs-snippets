@@ -1,3 +1,4 @@
+import SnippetEditForm from "@/components/snippet-edit-form";
 import db from "@/db";
 import { notFound } from "next/navigation";
 
@@ -17,5 +18,9 @@ export default async function SnippetEditPage(props: SnippetEditPageProps) {
     return notFound();
   }
 
-  return <div>Editing snippet &quot;{snippet.title}&quot;</div>;
+  return (
+    <div>
+      <SnippetEditForm snippet={snippet} />
+    </div>
+  );
 }
