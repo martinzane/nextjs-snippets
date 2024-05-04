@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/db";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createSnippet(
@@ -38,6 +39,7 @@ export async function createSnippet(
     }
   }
 
+  revalidatePath("/");
   redirect("/");
 }
 
@@ -50,5 +52,6 @@ export async function updateSnippet(id: number, code: string) {
 export async function deleteSnippet(id: number) {
   await db.snippet.delete({ where: { id } });
 
-  redirect(`/`);
+  revalidatePath("/");
+  redirect("/");
 }
