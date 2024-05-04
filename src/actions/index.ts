@@ -46,6 +46,7 @@ export async function createSnippet(
 export async function updateSnippet(id: number, code: string) {
   await db.snippet.update({ where: { id }, data: { code } });
 
+  revalidatePath(`/snippets/${id}`);
   redirect(`/snippets/${id}`);
 }
 
